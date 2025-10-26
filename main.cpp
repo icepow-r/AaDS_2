@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <ctime>
 #include <iostream>
 
 class TimsortArray
@@ -315,8 +313,7 @@ void mergeLo(int arr[], int base1, int len1, int base2, int len2)
             }
         } while ((count1 | count2) < minGallop && !done);
 
-        if (done)
-            break;
+        if (done) break;
 
         do
         {
@@ -462,8 +459,7 @@ void mergeHi(int arr[], int base1, int len1, int base2, int len2)
             }
         } while ((count1 | count2) < minGallop && !done);
 
-        if (done)
-            break;
+        if (done) break;
 
         do
         {
@@ -696,74 +692,31 @@ void timsort(int arr[], int n)
     mergeForceCollapse(arr, stack);
 }
 
-void printArray(int arr[], int n)
-{
-    for (int i = 0; i < n; i++)
-    {
-        std::cout << arr[i] << " ";
-    }
-    std::cout << std::endl;
-}
-
-bool isSorted(int arr[], int n)
-{
-    for (int i = 1; i < n; i++)
-    {
-        if (arr[i] < arr[i - 1])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 int main()
 {
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
-    const int sizes[] = {10, 100, 1000, 10000};
-
-    for (int sizeIdx = 0; sizeIdx < 4; sizeIdx++)
+    std::cout << "Enter the size of the array: ";
+    int n;
+    if (!(std::cin >> n) || n < 0)
     {
-        int n = sizes[sizeIdx];
-        int* arr = new int[n];
-
-        std::cout << "Test " << (sizeIdx + 1) << ": Array size = " << n << std::endl;
-
-        for (int i = 0; i < n; i++)
-        {
-            arr[i] = std::rand() % 1000;
-        }
-
-        if (n <= 10)
-        {
-            std::cout << "Before: ";
-            printArray(arr, n);
-        }
-
-        timsort(arr, n);
-
-        if (n <= 10)
-        {
-            std::cout << "After:  ";
-            printArray(arr, n);
-        }
-
-        if (isSorted(arr, n))
-        {
-            std::cout << "Result: SORTED CORRECTLY" << std::endl;
-        }
-        else
-        {
-            std::cout << "Result: ERROR - NOT SORTED" << std::endl;
-        }
-
-        std::cout << std::endl;
-
-        delete[] arr;
+        return 0;
     }
-
-    std::cout << "All tests completed!" << std::endl;
-
+    std::cout << "Enter the elements of the array: ";
+    int* arr = new int[n];
+    for (int i = 0; i < n; i++)
+    {
+        if (!(std::cin >> arr[i]))
+        {
+            arr[i] = 0;
+        }
+    }
+    timsort(arr, n);
+    std::cout << "Sorted array: ";
+    for (int i = 0; i < n; i++)
+    {
+        if (i) std::cout << ' ';
+        std::cout << arr[i];
+    }
+    std::cout << std::endl;
+    delete[] arr;
     return 0;
 }
